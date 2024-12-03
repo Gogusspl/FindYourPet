@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:overScrollMode="never"
+    android:scrollbars="vertical"
+    tools:context=".myApp.app.activity.MainActivity"
+    android:background="@color/background">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="@dimen/_43sdp"
+            android:layout_height="@dimen/_43sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:id="@+id/logo"
+            android:contentDescription="@string/fab_transformation_scrim_behavior"
+            android:src="@drawable/findyourpet"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius="100dp" />
+
+        <ImageButton
+            android:id="@+id/homeButton"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:background="@null"
+            android:contentDescription="@string/gotohome"
+            android:scaleType="fitCenter"
+            android:src="@drawable/homebutton"
+            app:layout_constraintStart_toEndOf="@+id/logo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/gotoshop"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:contentDescription="@string/gotoshop"
+            android:src="@drawable/shopping"
+            app:layout_constraintStart_toEndOf="@+id/homeButton"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@null"
+            android:scaleType="fitCenter"/>
+
+        <ImageButton
+            android:id="@+id/chat"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:contentDescription="@string/chat"
+            android:src="@drawable/chat"
+            app:layout_constraintStart_toEndOf="@+id/gotoshop"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@null"
+            android:scaleType="fitCenter"/>
+
+        <ImageButton
+            android:id="@+id/menu"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+
+            android:layout_marginStart="@dimen/_8sdp"
+            android:contentDescription="@string/menu"
+            android:src="@drawable/menu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@null"
+            android:scaleType="fitCenter"/>
+
+        <View
+            android:id="@+id/vertical_separator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_5sdp"
+            android:background="#66606F"
+            app:layout_constraintTop_toBottomOf="@+id/homeButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

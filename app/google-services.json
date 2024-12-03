@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "717933253460",
+    "project_id": "findyourpet-bca58",
+    "storage_bucket": "findyourpet-bca58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717933253460:android:9e3d373ae404b104a92ec1",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnDK0qeD-mrnTj3swYxRcwhTslRFVFnaE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
