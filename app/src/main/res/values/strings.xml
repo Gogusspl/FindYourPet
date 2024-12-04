@@ -17,4 +17,7 @@
     <string name="gotohome">gotohome</string>
     <string name="chat">chat</string>
     <string name="menu">menu</string>
+    <string name="select_user">Select user</string>
+    <string name="user_name">User Name</string>
+    <string name="user_email">User Email</string>
 </resources>
