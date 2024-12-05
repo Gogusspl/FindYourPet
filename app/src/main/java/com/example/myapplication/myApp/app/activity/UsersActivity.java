@@ -1,5 +1,6 @@
 package com.example.myapplication.myApp.app.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.databinding.ActivityUsersBinding;
 import com.example.myapplication.myApp.app.Adapter.UsersAdapter;
+import com.example.myapplication.myApp.app.listeners.UserListener;
 import com.example.myapplication.myApp.app.models.Users;
 import com.example.myapplication.myApp.app.utilities.Constants;
 import com.example.myapplication.myApp.app.utilities.PreferenceManager;
@@ -17,7 +19,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersActivity extends AppCompatActivity {
+public class UsersActivity extends AppCompatActivity implements UserListener {
 
     private ActivityUsersBinding binding;
     private PreferenceManager preferenceManager;
@@ -35,6 +37,7 @@ public class UsersActivity extends AppCompatActivity {
     private void setListeners(){
         binding.imageback.setOnClickListener(v -> onBackPressed());
     }
+
     private void getUsers(){
         loading(true);
         FirebaseFirestore databse = FirebaseFirestore.getInstance();
@@ -51,12 +54,14 @@ public class UsersActivity extends AppCompatActivity {
                             }
                             Users user = new Users();
                             user.name = queryDocumentSnapshotu.getString(Constants.KEY_NAME);
+                            user.image = queryDocumentSnapshotu.getString(Constants.KEY_IMAGE);
                             user.email = queryDocumentSnapshotu.getString(Constants.KEY_EMAIL);
                             user.token = queryDocumentSnapshotu.getString(Constants.KEY_FCM_TOKEN);
+                            user.id = queryDocumentSnapshotu.getId();
                             users.add(user);
                         }
                         if(users.size() > 0){
-                            UsersAdapter usersAdapter = new UsersAdapter(users);
+                            UsersAdapter usersAdapter = new UsersAdapter(users, this);
                             binding.usersRecyclerView.setAdapter(usersAdapter);
                             binding.usersRecyclerView.setVisibility(View.VISIBLE);
                         }
@@ -80,5 +85,13 @@ public class UsersActivity extends AppCompatActivity {
         } else{
             binding.progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onUserClicked(Users users) {
+        Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
+        intent.putExtra(Constants.KEY_USER, users);
+        startActivity(intent);
+        finish();
     }
 }

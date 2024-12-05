@@ -15,6 +15,10 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".myApp.app.activity.MessagingActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
             android:name=".myApp.app.activity.UsersActivity"
             android:exported="false" />
         <activity

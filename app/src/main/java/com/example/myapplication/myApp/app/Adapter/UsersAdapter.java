@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.myApp.app.listeners.UserListener;
 import com.example.myapplication.myApp.app.models.Users;
 
 import java.util.List;
@@ -16,9 +17,11 @@ import java.util.List;
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> {
 
     private final List<Users> users;
+    private final UserListener userListener;
 
-    public UsersAdapter(List<Users> users){
+    public UsersAdapter(List<Users> users, UserListener userListener) {
         this.users = users;
+        this.userListener = userListener;
     }
 
     @NonNull
@@ -31,8 +34,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         Users user = users.get(position);
-        holder.nameTextView.setText(user.name);
-        holder.emailTextView.setText(user.email);
+        holder.setUserData(user); // Ustaw dane użytkownika w widoku
     }
 
     @Override
@@ -43,11 +45,17 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     class UserViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView, emailTextView;
 
-        UserViewHolder(View view){
+        UserViewHolder(View view) {
             super(view);
             nameTextView = view.findViewById(R.id.userName);
             emailTextView = view.findViewById(R.id.userEmail);
         }
+
+        void setUserData(Users user) {
+            nameTextView.setText(user.name);
+            emailTextView.setText(user.email);
+
+            itemView.setOnClickListener(v -> userListener.onUserClicked(user));
+        }
     }
 }
-
