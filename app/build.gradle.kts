@@ -61,4 +61,8 @@ dependencies {
 
     // MultiDex
     implementation(libs.multidex)
+
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.scalars)
 }

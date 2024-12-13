@@ -27,20 +27,32 @@
 
     <TextView
         android:id="@+id/textName"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
         android:textColor="@color/background"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/goBack"
         app:layout_constraintEnd_toStartOf="@id/report"
-        app:layout_constraintStart_toEndOf="@+id/goBack"
-        app:layout_constraintTop_toTopOf="@+id/goBack" />
+        app:layout_constraintBottom_toBottomOf="@id/goBack"
+        app:layout_constraintStart_toEndOf="@id/goBack"
+        app:layout_constraintTop_toTopOf="@id/goBack" />
+
+    <View
+        android:id="@+id/onlineCircle"
+        android:layout_width="@dimen/_8sdp"
+        android:layout_height="@dimen/_8sdp"
+        android:padding="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:background="@drawable/online_status_circle"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/textName"
+        app:layout_constraintStart_toEndOf="@id/textName"
+        app:layout_constraintTop_toTopOf="@id/textName" />
 
     <View
         android:id="@+id/viewSupporter"

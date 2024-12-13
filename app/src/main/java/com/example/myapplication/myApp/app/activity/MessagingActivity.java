@@ -2,6 +2,7 @@ package com.example.myapplication.myApp.app.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
@@ -11,7 +12,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
@@ -33,14 +35,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
-public class MessagingActivity extends AppCompatActivity {
+public class MessagingActivity extends BaseActivity {
     private ActivityChatBinding binding;
     private Users receiverUser;
     private List<ChatMessage> chatMessages;
     private ChatAdapter chatAdapter;
     private PreferenceManager preferenceManager;
     private FirebaseFirestore database;
+    private Boolean isReceiverAvailable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +82,34 @@ public class MessagingActivity extends AppCompatActivity {
         database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
         inputMessage.setText(null);
     }
+
+    private void listenAvailabilityOfReceiver(){
+        View onlineView;
+        onlineView = findViewById(R.id.onlineCircle);
+
+        database.collection(Constants.KEY_COLLECTION_USERS).document(
+                receiverUser.id
+        ).addSnapshotListener(MessagingActivity.this, (value, error) -> {
+            if(error != null){
+                return;
+            }
+            if(value != null){
+                if(value.getLong(Constants.KEY_AVAILABILITY) != null){
+                    int availability = Objects.requireNonNull(
+                            value.getLong(Constants.KEY_AVAILABILITY)
+                    ).intValue();
+                    isReceiverAvailable = availability == 1;
+                }
+            }
+            if (isReceiverAvailable) {
+                onlineView.setVisibility(View.VISIBLE);
+            } else {
+                onlineView.setVisibility(View.INVISIBLE);
+            }
+
+        });
+    }
+
     private void listenMessages(){
         database.collection(Constants.KEY_COLLECTION_CHAT)
                 .whereEqualTo(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID))
@@ -90,34 +122,34 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
     private final EventListener<QuerySnapshot> eventListener = (value, error) ->  {
-      if(error != null){
-          return;
-      }
-      if(value != null){
-          int count = chatMessages.size();
-          for(DocumentChange documentChange: value.getDocumentChanges()){
-              if(documentChange.getType() == DocumentChange.Type.ADDED){
-                  ChatMessage chatMessage = new ChatMessage();
-                  chatMessage.senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
-                  chatMessage.receiverId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
-                  chatMessage.message = documentChange.getDocument().getString(Constants.KEY_MESSAGE);
-                  chatMessage.dateTime = getReadableDateTime(documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP));
-                  chatMessage.dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);
-                  chatMessages.add(chatMessage);
-              }
-          }
-          Collections.sort(chatMessages, (obj1, obj2) -> obj1.dateObject.compareTo(obj2.dateObject));
-          RecyclerView chatRecyclerView;
-          chatRecyclerView = findViewById(R.id.chatRecyclerView);
-          if(count == 0){
-              chatAdapter.notifyDataSetChanged();
-          } else{
+        if(error != null){
+            return;
+        }
+        if(value != null){
+            int count = chatMessages.size();
+            for(DocumentChange documentChange: value.getDocumentChanges()){
+                if(documentChange.getType() == DocumentChange.Type.ADDED){
+                    ChatMessage chatMessage = new ChatMessage();
+                    chatMessage.senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
+                    chatMessage.receiverId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
+                    chatMessage.message = documentChange.getDocument().getString(Constants.KEY_MESSAGE);
+                    chatMessage.dateTime = getReadableDateTime(documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP));
+                    chatMessage.dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);
+                    chatMessages.add(chatMessage);
+                }
+            }
+            Collections.sort(chatMessages, (obj1, obj2) -> obj1.dateObject.compareTo(obj2.dateObject));
+            RecyclerView chatRecyclerView;
+            chatRecyclerView = findViewById(R.id.chatRecyclerView);
+            if(count == 0){
+                chatAdapter.notifyDataSetChanged();
+            } else{
 
-              chatAdapter.notifyItemRangeInserted(chatMessages.size(),chatMessages.size());
-              chatRecyclerView.smoothScrollToPosition(chatMessages.size()-1);
-          }
-          chatRecyclerView.setVisibility(View.VISIBLE);
-      }
+                chatAdapter.notifyItemRangeInserted(chatMessages.size(),chatMessages.size());
+                chatRecyclerView.smoothScrollToPosition(chatMessages.size()-1);
+            }
+            chatRecyclerView.setVisibility(View.VISIBLE);
+        }
         ProgressBar progressBar;
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
@@ -150,5 +182,11 @@ public class MessagingActivity extends AppCompatActivity {
 
     private String getReadableDateTime(Date date){
         return new SimpleDateFormat("MMMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listenAvailabilityOfReceiver();
     }
 }

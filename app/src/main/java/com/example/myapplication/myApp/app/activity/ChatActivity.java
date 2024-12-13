@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.R;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BaseActivity {
 
     private boolean isSearchSubmitted = false;
 
@@ -22,12 +21,9 @@ public class ChatActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Logika wyszukiwania
                 isSearchSubmitted = true;
-
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
 
@@ -35,7 +31,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        // Obsługa kliknięcia na SearchView
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,8 +41,6 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
-
-
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
@@ -59,7 +52,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void reloadActivity() {
         Intent intent = getIntent();
