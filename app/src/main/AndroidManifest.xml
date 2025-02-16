@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
+        android:forceDarkAllowed="false"
         tools:targetApi="31">
         <activity
             android:name=".myApp.app.activity.MessagingActivity"
@@ -31,6 +32,9 @@
             android:name=".myApp.app.activity.SignUpActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".myApp.app.activity.ShopActivity"
+            android:exported="true" />
         <activity
             android:name=".myApp.app.activity.SignInActivity"
             android:exported="true"

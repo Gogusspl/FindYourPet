@@ -10,66 +10,34 @@ import androidx.appcompat.widget.SearchView;
 
 import com.example.myapplication.R;
 
-public class ChatActivity extends BaseActivity {
-
-    private boolean isSearchSubmitted = false;
+public class ShopActivity extends BaseActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_shop);
 
-        final SearchView searchView = findViewById(R.id.search_view);
         ImageButton homeButton = findViewById(R.id.homeButton);
         ImageButton chatButton = findViewById(R.id.chat);
         ImageButton shopButton = findViewById(R.id.gotoshop);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                isSearchSubmitted = true;
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
-        searchView.setOnClickListener(v -> {
-            if (searchView.isIconified()) {
-                Intent intent = new Intent(ChatActivity.this, UsersActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        searchView.setOnCloseListener(() -> {
-            if (!isSearchSubmitted) {
-                reloadActivity();
-            }
-            isSearchSubmitted = false;
-            return true;
-        });
-
-
         homeButton.setOnClickListener(v -> {
             animateButton(homeButton, true);
-            Intent intent = new Intent(ChatActivity.this, MainActivity.class);
+            Intent intent = new Intent(ShopActivity.this, MainActivity.class);
             intent.putExtra("selectedTab", "home");
             startActivity(intent);
             finish();
         });
 
-        shopButton.setOnClickListener(v -> {
-            animateButton(shopButton, true);
-            Intent intent = new Intent(ChatActivity.this, ShopActivity.class);
+        chatButton.setOnClickListener(v -> {
+            animateButton(chatButton, true);
+            Intent intent = new Intent(ShopActivity.this, ChatActivity.class);
             intent.putExtra("selectedTab", "home");
             startActivity(intent);
             finish();
         });
 
-        highlightButton(chatButton);
+        highlightButton(shopButton);
     }
 
 
