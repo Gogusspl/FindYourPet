@@ -73,7 +73,7 @@
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginStart="@dimen/_8sdp"
             android:contentDescription="@string/menu"
-            android:src="@drawable/menu"
+            android:src="@drawable/menu2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@null"

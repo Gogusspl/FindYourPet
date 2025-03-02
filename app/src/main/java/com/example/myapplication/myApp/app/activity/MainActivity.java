@@ -4,17 +4,28 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageButton;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
 import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.myapplication.R;
+import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
     private ImageButton selectedButton;
 
     @Override
@@ -39,11 +50,11 @@ public class MainActivity extends BaseActivity {
             startActivity(intent);
         });
 
-        shopButton.setOnClickListener((v -> {
+        shopButton.setOnClickListener(v -> {
             handleButtonClick(shopButton);
             Intent intent = new Intent(MainActivity.this, ShopActivity.class);
             startActivity(intent);
-        }));
+        });
 
         String selectedTab = getIntent().getStringExtra("selectedTab");
         if (selectedTab != null) {
@@ -65,6 +76,42 @@ public class MainActivity extends BaseActivity {
             animateAndHighlightButton(homeButton, true);
             selectedButton = homeButton;
         }
+
+        drawerLayout = findViewById(R.id.main);
+        toolbar = findViewById(R.id.toolbar);
+        navigationView = findViewById(R.id.navigationView);
+
+        setSupportActionBar(toolbar);
+
+        navigationView.bringToFront();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        // Obsługa kliknięcia ikony menu w Toolbar
+        toolbar.setNavigationIcon(R.drawable.menu2);
+        toolbar.setNavigationOnClickListener(v -> {
+            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                drawerLayout.closeDrawer(GravityCompat.END);
+            } else {
+                drawerLayout.openDrawer(GravityCompat.END);
+            }
+        });
+        navigationView.setNavigationItemSelectedListener(this);
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                    drawerLayout.closeDrawer(GravityCompat.END);
+                } else {
+                    setEnabled(false);
+                    getOnBackPressedDispatcher().onBackPressed();
+                    setEnabled(true);
+                }
+            }
+        });
+
     }
 
     private void handleButtonClick(ImageButton clickedButton) {
@@ -86,5 +133,10 @@ public class MainActivity extends BaseActivity {
         } else {
             button.setColorFilter(null);
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return true;
     }
 }

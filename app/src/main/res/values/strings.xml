@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name"></string>
     <string name="welcome_back">Welcome Back</string>
     <string name="login_to_continue">Login to continue</string>
     <string name="email">email</string>
@@ -21,4 +21,7 @@
     <string name="user_name">User Name</string>
     <string name="user_email">User Email</string>
     <string name="type_a_message">type a message</string>
+    <string name="find_your_pet">Find Your Pet</string>
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
 </resources>

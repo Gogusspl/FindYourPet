@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
-    android:orientation="horizontal"
     android:overScrollMode="never"
     android:scrollbars="vertical"
     tools:context=".myApp.app.activity.MainActivity"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:layout_marginTop="@dimen/_10sdp"
+    tools:openDrawer="end">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
+        <!-- Górna część (nagłówek) -->
         <com.makeramen.roundedimageview.RoundedImageView
             android:layout_width="@dimen/_43sdp"
             android:layout_height="@dimen/_43sdp"
@@ -67,18 +69,18 @@
             android:background="@null"
             android:scaleType="fitCenter" />
 
-        <ImageButton
-            android:id="@+id/menu"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:contentDescription="@string/menu"
-            android:src="@drawable/menu"
-            app:layout_constraintTop_toTopOf="parent"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minHeight="?attr/actionBarSize"
+            android:maxHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@null"
-            android:scaleType="fitCenter" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/menu2" />
 
         <View
             android:id="@+id/vertical_separator"
@@ -89,20 +91,53 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Sekcja przewijalna, zaczyna się POD vertical_separator -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintTop_toBottomOf="@id/vertical_separator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/myTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="To jest testowy tekst"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <!-- Dodaj więcej treści, aby testować przewijanie -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Długi tekst testowy"
+                    android:textSize="18sp"
+                    android:layout_marginTop="50dp"
+                    app:layout_constraintTop_toBottomOf="@id/myTextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end|center"
+        app:menu="@menu/menu"
+        app:headerLayout="@layout/menu_header" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
-</LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

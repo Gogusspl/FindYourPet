@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#D9C0CE"
+    android:gravity="bottom"
+    android:padding="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:id="@+id/logoMenu"
+            android:contentDescription="@string/fab_transformation_scrim_behavior"
+            android:src="@drawable/findyourpet"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:riv_corner_radius="100dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menuText"
+            android:text="@string/find_your_pet"
+            android:textSize="@dimen/_22sdp"
+            android:textStyle="italic"
+        app:layout_constraintStart_toEndOf="@id/logoMenu"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_vertical"
+        android:textColor="#FFFFFF" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

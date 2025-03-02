@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/notificationsMenu"
+            android:icon="@drawable/baseline_circle_notifications_24"
+            android:title="Notifications" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:title="Profile">
+            <menu>
+                <item
+                    android:id="@+id/menuProfile"
+                    android:icon="@drawable/iconprofile"
+                    android:title="Edit profile"
+                    />
+                <item
+                    android:id="@+id/LogoutMenu"
+                    android:title="Logout"
+                    android:icon="@drawable/logout"/>
+            </menu>
+        </item>
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/menuRateUs"
+                android:icon="@drawable/baseline_assistant_photo_24"
+                android:title="Rate us"/>
+            <item
+                android:id="@+id/menuHelp"
+                android:icon="@drawable/baseline_contact_support_24"
+                android:title="Contact support"/>
+        </menu>
+    </item>
+</menu>
